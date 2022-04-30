@@ -22,9 +22,17 @@ const Search = () => {
 
       setResults(data.data.query.search);
     };
-    if (value) {
-      getData();
-    }
+
+    const timer = setTimeout(() => {
+      if (value) {
+        getData();
+      }
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, 1000);
+    
   }, [value]);
 
   const renderReasults = () => {
