@@ -16,14 +16,30 @@ const Search = () => {
           list: "search",
           format: "json",
           origin: "*",
-          srsearch: "value",
+          srsearch: { value },
         },
       });
-      console.log(data.data.query.search);
+
+      setResults(data.data.query.search);
     };
-    getData();
+    if (value) {
+      getData();
+    }
   }, [value]);
 
+  const renderReasults = () => {
+    return results.map((val) => {
+      return (
+        <div className="ui message" key={val.pageid}>
+          <div className="header">{val.title}</div>
+          <p dangerouslySetInnerHTML={{ __html: val.snippet }}></p>
+          <a href={`https://en.wikipedia.org/wiki?curid=${val.pageid}`}>
+            Go page
+          </a>
+        </div>
+      );
+    });
+  };
   return (
     <div className="ui container" style={{ marginTop: "40px" }}>
       <div className="ui input focus" style={{ width: "100%" }}>
@@ -34,6 +50,7 @@ const Search = () => {
           placeholder="Search..."
         />
       </div>
+      {renderReasults()}
     </div>
   );
 };
