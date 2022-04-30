@@ -7,6 +7,11 @@ const Search = () => {
     setValue(e.target.value);
   };
   // en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=programming
+  // useEffectni uchta turi mavjud ..
+  //1. dastur ishga tushganda ishlab ketadi
+  // useEffect(() => {
+  //   console.log("doston");
+  // }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -26,13 +31,14 @@ const Search = () => {
     const timer = setTimeout(() => {
       if (value) {
         getData();
+      } else if (!value && results.length) {
+        setResults([]);
       }
 
       return () => {
         clearTimeout(timer);
       };
     }, 1000);
-    
   }, [value]);
 
   const renderReasults = () => {
